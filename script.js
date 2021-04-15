@@ -1,10 +1,14 @@
 const transactionsU1 = document.querySelector('#transactions') //pega o referencia da ul
+const incomeDisplay = document.querySelector('#money-plus')
+const expenseDisplay = document.querySelector('#money-minus')
+const balanceDisplay = document.querySelector('#balance')
 
 const  dummyTransactions = [
     {id: 1, name: 'Bolo de brigadeiro', amount: -20},
     {id: 2, name: 'Salário', amount: 300},
     {id: 3, name: 'Torta de frango', amount: -10},
-    {id: 4, name: 'Violão', amount: 150}
+    {id: 4, name: 'Violão', amount: 150},
+    {id: 4, name: 'Show Anavitoria', amount: -120}
 ]
 
 const addTransactionIntoDom = transaction => {
@@ -23,8 +27,30 @@ const addTransactionIntoDom = transaction => {
     
 }
 
+const updateBalanceValues = () => {
+    const transactionAmounts = dummyTransactions
+        .map(transaction => transaction.amount); //recupera o valor do maps de array
+    const total = transactionAmounts
+        .reduce((accumulator, transaction) => accumulator + transaction, 0)
+        .toFixed(2) //somando valores do map no acc
+    const income = transactionAmounts
+        .filter(value => value > 0)
+        .reduce((accumulator, value) => accumulator + value, 0)
+        .toFixed(2) //retorna o valor so se a condição for true e soma os valores positivos
+    const expense = transactionAmounts
+        .filter(value => value < 0)
+        .reduce((accumulator, value ) => accumulator + value, 0)
+        .toFixed(2)
+    
+    balanceDisplay.textContent = ` R$ ${total} ` //adiciona o valor no display
+    incomeDisplay.textContent = ` R$ ${income} `
+    expenseDisplay.textContent = ` R$ ${expense} `
+
+}
+
 const init = () => {
     dummyTransactions.forEach(addTransactionIntoDom)
+    updateBalanceValues()
 }
 
 init()
