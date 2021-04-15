@@ -1,3 +1,5 @@
+const transactionsU1 = document.querySelector('#transactions') //pega o referencia da ul
+
 const  dummyTransactions = [
     {id: 1, name: 'Bolo de brigadeiro', amount: -20},
     {id: 2, name: 'Salário', amount: 300},
@@ -14,11 +16,15 @@ const addTransactionIntoDom = transaction => {
 
     li.classList.add(CSSClass) 
     li.innerHTML = `
-        ${transaction.name} <span>${operator} R$ ${amountWithoutOperator}</spam><button class="delete-btn>x</button>
+        ${transaction.name} <span>${operator} R$ ${amountWithoutOperator}</spam><button class="delete-btn">x</button>
     `
-    console.log(li)
-    
+    //console.log(li)
+    transactionsU1.append(li) //passa como ob valorado
     
 }
 
-addTransactionIntoDom(dummyTransactions[0]) //chamada de função
+const init = () => {
+    dummyTransactions.forEach(addTransactionIntoDom)
+}
+
+init()
