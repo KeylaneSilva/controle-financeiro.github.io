@@ -1,7 +1,10 @@
-const transactionsU1 = document.querySelector('#transactions') //pega o referencia da ul
+const transactionsU1 = document.querySelector('#transactions') //pega o referencia da class
 const incomeDisplay = document.querySelector('#money-plus')
 const expenseDisplay = document.querySelector('#money-minus')
 const balanceDisplay = document.querySelector('#balance')
+const form = document.querySelector('#form')
+const inputTransactionName = document.querySelector('#text')
+const inputTransactionAmount = document.querySelector('#amount')
 
 const  dummyTransactions = [
     {id: 1, name: 'Bolo de brigadeiro', amount: -20},
@@ -14,7 +17,7 @@ const  dummyTransactions = [
 const addTransactionIntoDom = transaction => {
     const operator = transaction.amount < 0 ? '-' : '+' //verificar atribuir operadores
     const CSSClass = transaction.amount < 0 ? 'minus': 'plus'
-    const amountWithoutOperator = Math.abs(transaction.amount)
+    const amountWithoutOperator = Math.abs(transaction.amount) //retorna o valor absoluto
     //console.log(CSSClass)
     const li = document.createElement('li') //cria um elemento html
 
@@ -37,10 +40,12 @@ const updateBalanceValues = () => {
         .filter(value => value > 0)
         .reduce((accumulator, value) => accumulator + value, 0)
         .toFixed(2) //retorna o valor so se a condição for true e soma os valores positivos
-    const expense = transactionAmounts
+    const expense = Math.abs(transactionAmounts
         .filter(value => value < 0)
-        .reduce((accumulator, value ) => accumulator + value, 0)
+        .reduce((accumulator, value ) => accumulator + value, 0))
         .toFixed(2)
+
+    
     
     balanceDisplay.textContent = ` R$ ${total} ` //adiciona o valor no display
     incomeDisplay.textContent = ` R$ ${income} `
@@ -54,3 +59,30 @@ const init = () => {
 }
 
 init()
+
+const generateID = () => Math.round(Math.round() * 1000)
+
+form.addEventListener('submit', event => {
+    event.preventDefault()
+
+    const transactionName = inputTransactionName.value.trim()
+    const transactionAmount = inputTransactionAmount.value.trim()
+
+    if(transactionName === '' || transactionAmount === ''){
+        alert('Por favor, preencha tanto o nome quanto o valor da transação')
+        return
+    }
+
+    const transaction = {
+        id: generateID(),
+        name: transactionName,
+        amount: transactionAmount
+    }
+
+    dummyTransactions.push(transaction)
+    init()
+
+    inputTransactionName.value = ''
+    inputTransactionAmount.value = ''
+
+})
