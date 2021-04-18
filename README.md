@@ -21,7 +21,8 @@
 
 :heavy_check_mark: HTML5 <br>
 :heavy_check_mark: CSS3 <br>
-:heavy_check_mark: Javascript
+:heavy_check_mark: Javascript <br>
+:heavy_check_mark: API Web Storage
 
 <h2 align="center" id="autor"> Autora </h2>
 
